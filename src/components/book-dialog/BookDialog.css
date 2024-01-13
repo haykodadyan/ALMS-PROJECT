@@ -1,0 +1,43 @@
+.book_dial_wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    height: 50vh;
+}
+
+
+.loan_buttons_wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 20px;
+    gap: 25px;
+}
+
+.confirm_buttons{
+    display: flex;
+    gap: 30px;
+}
+
+.terms_checkbox_wrapper{
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    gap: 10px;
+}
+
+.terms_checkbox{
+    width: 20px;
+    height: 20px;
+}
+
+.colorful_span{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.colorful_span:hover{
+    color: darkcyan;
+}

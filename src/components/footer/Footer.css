@@ -1,0 +1,7 @@
+.a_links{
+    color: inherit;
+    text-decoration: none;
+}
+.a_links:hover{
+    text-decoration: underline;
+}
