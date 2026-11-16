@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Login from './pages/login/Login';
 import Home from './pages/home/Home';
 import Register from './pages/register/Register';
@@ -10,27 +10,29 @@ import Profile from './pages/profile/Profile';
 import Footer from './components/footer/Footer';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import AuthService from './authApi/Auth';
-import './App.css'
-const App = () => {
-    const theme = createTheme({
-        typography: {
-            fontFamily: 'Roboto, sans-serif',
-        },
-    });
+import './App.css';
 
+const theme = createTheme({
+    typography: {
+        fontFamily: 'Roboto, sans-serif',
+    },
+});
+
+const PUBLIC_PATHS = ['/login', '/register'];
+
+const App = () => {
     const location = useLocation();
-    const hideNavbarPaths = ['/login', '/register'];
-    const shouldHideNavbar = hideNavbarPaths.includes(location.pathname) || !AuthService.getIsAuthenticated();
+    const navigate = useNavigate();
+
+    const isAuthenticated = AuthService.getIsAuthenticated();
+    const isPublicPath = PUBLIC_PATHS.includes(location.pathname);
+    const shouldHideNavbar = isPublicPath || !isAuthenticated;
 
     useEffect(() => {
-        const checkAuth = async () => {
-            const isAuth = AuthService.getIsAuthenticated();
-            if (!isAuth && location.pathname !== '/login' && location.pathname !== '/register') {
-                return <Navigate to="/login" />;
-            }
-        };
-        checkAuth();
-    }, [location.pathname]);
+        if (!isAuthenticated && !isPublicPath) {
+            navigate('/login', { replace: true });
+        }
+    }, [isAuthenticated, isPublicPath, navigate]);
 
     return (
         <ThemeProvider theme={theme}>
